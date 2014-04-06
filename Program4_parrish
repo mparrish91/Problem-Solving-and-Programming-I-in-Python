@@ -1,0 +1,215 @@
+#! /usr/bin/pythonw 
+#CS 101 #Program 4
+#Malcolm Parrish 
+#mp2gb@mail.umkc.edu)
+##
+##PROBLEM: #This program is for the Ceasar Cipher.  It is an encryption/decryption program that shifts the alphabet.  The program takes in a user input and can either encode, decode or crack the cipher.
+##
+##ALGORITHM:
+
+#Define shift function that has string input and shift amount
+#   cycle through each character of string input
+#       for each character calculate the ord. value
+#           ord value + shift % 26 = ord
+#           reconvert the ord value to letter
+#       add value to variable encoded
+#return string encoded
+
+
+
+#Define a crack function with string input
+#   assign value to lowestsum
+#   Create a loop to go from -1 to -26
+#       use shift function and number as shift amount
+#       assign values to typical frequency E, T, O, A, I, N
+#   Create a loop to iterate through each element in the crack list
+#       calculate length of element = lenelement
+#       count occurrences of E = countE
+#           countE/lenelement(store value as frequency int)
+#           difference = frequency int - typical frequency
+#           difference * difference = sum e
+#       count occurrences of T = countT
+#           countT/lenelement(store value as frequency int)
+#           difference = frequency int - typical frequency
+#           difference * difference = sum t
+#       count occurrences of O = count0
+#           countO/lenelement(store value as frequency int)
+#           difference = frequency int - typical frequency
+#           difference * difference = sum o
+#       count occurrences of A = countA
+#           countA/lenelement(store value as frequency int)
+#           difference = frequency int - typical frequency
+#           difference * difference = sum a
+#       count occurrences of I = countI
+#           countI/lenelement(store value as frequency int)
+#           difference = frequency int - typical frequency
+#           difference * difference = sum i
+#       count occurrences of N = countN
+#           countN /lenelement(store value as frequency int)
+#           difference = frequency int - typical frequency
+#           difference * difference = sum n
+
+#       sum = sum e + sum t + sum 0 + sum a + sum I + sum n
+#       if sum < lowestsum
+#           set lowestsum = sum
+
+#calculate the min of shift list and assign to correct key
+#index value of correct key in shift list = keyindex(key index)
+#return index value of key index in crack list (prints decrypted string)
+#return the value of the position(key index) in the range of (-1,25) (prints best key)
+
+
+#Outer while loop for game
+#   Output MAIN MENU
+#   Output option 1 Encode a string
+#   Output option 2 Decode a string
+#   Output option 3 Attempt cracking encryption
+#   Output option 4 Quit
+#   Prompt the user for a selection and store as number
+#   If the user selects a number that is < 1 or > 4
+#       Reprompt the user
+#   Else
+#       If the user selects 1
+#           Prompt the user for string input and shift amount
+#           Call the encode function on the input
+#       If the user selects 2
+#           Prompt the user for string to decode and shift amount
+#           Call the decode function on the input
+#       If the user selects 3
+#           Prompt the user for string to decode
+#           Call the crack function on the input
+#       If the user selects 4
+#           Set the outer while loop to false
+#  Output Thanks for Playing
+
+
+
+#Define shift function that has string input and shift amount
+def shift_function(text_str, shift_int):
+
+    for char in text_str:
+        shift_chr = chr((ord(char) % + shift_int) % length(string.ascii))
+        encoded_str += shift_chr
+    return encoded_str
+
+
+
+
+#Define a crack function with string input
+
+def crack_function(text_str):
+    countO = 0
+    sum_o = 0
+    countE = 0
+    sum_e = 0
+    countA = 0
+    sum_a = 0
+    countI = 0
+    sum_i = 0
+    countN = 0
+    sum_n = 0
+    countT = 0
+    sum_t = 0
+    difference = 0
+    len_element = 0
+    frequency_int = 0
+    crack_list = []
+    lowest_sum = 25
+    typical_e = .1119
+    typical_t = .0928
+    typical_o = .0819
+    typical_a = .0754
+    typical_i = .0710
+    typical_n = .0643
+    
+    for char i in range(-1,-26):
+        crack_list.append(shift_function(text_str, i))
+    
+    
+    for i in crack_list:
+        len_element = length(i)
+        countE = i.count(e)
+        frequency_int = countE / len_element
+        difference = frequency_int - typical_e
+        difference * difference = sum_e
+            
+            
+        countT = i.count(t)
+        frequency_int = countT / len_element
+        difference = frequency_int - typical_t
+        difference * difference = sum_t
+    
+    
+        countO = i.count(o)
+        frequency_int = countO / len_element
+        difference = frequency_int - typical_o
+        difference * difference = sum_o
+    
+    
+        countA = i.count(a)
+        frequency_int = countA / len_element
+        difference = frequency_int - typical_a
+        difference * difference = sum_a
+
+
+        countI = i.count(i)
+        frequency_int = countI / len_element
+        difference = frequency_int - typical_i
+        difference * difference = sum_i
+    
+    
+        countN = i.count(n)
+        frequency_int = countN / len_element
+        difference = frequency_int - typical_n
+        difference * difference = sum_n
+
+        sum = sum_a + sum_e + sum_i + sum_t +sum_o + sum_n
+        if sum < lowest_sum:
+            lowest_sum = sum
+
+        crack
+
+
+
+
+
+
+
+
+
+import string
+
+
+#Outer while loop for game
+
+while Playing == True:
+    print("MAIN MENU \n 1) Encode a string \n 2) Decode a string \n 3) Attempt cracking encryption \n 4) Quit")
+    user_choice = input("Please enter your selection ==> ")
+
+    if user_choice < 1 or user_choice > 4:
+        continue
+    else:
+        if user_choice == 1:
+            text = input("Enter (brief) text to encrypt: hello world: ")
+            shift = input("Enter the number to shift letters by: ")
+            shift_function(text, shift)
+
+        elif user_choice == 2:
+            text = input("Enter (brief) text to decrypt: hello world: ")
+            shift = input("Enter the number to shift letters by(negative): ")
+            shift_function(text, shift)
+
+        elif user_choice == 3:
+            user_choice = input("Enter text to be decrypted: ")
+            crack_function(text)
+
+        else:
+            Playing == False
+            print("Thanks for playing")
+
+
+
+
+
+
+
