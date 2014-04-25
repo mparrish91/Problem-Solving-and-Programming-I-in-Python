@@ -1,3 +1,16 @@
+#! /usr/bin/pythonw
+##CS 101
+##Program 6
+##Malcolm Parrish
+##mp2gb@mail.umkc.edu)
+##
+##PROBLEM: #This program is for the Evil Hangman game.  The program unlike a typical hangman game keeps a family of words to "cheat" and make it that much harder for the user.   The word familys are chosen from a dictionary file and the user specifies the number of attempts they want to guess the word.
+##
+##ALGORITHM: See separate file
+
+
+
+
 import string
 
 
@@ -110,7 +123,6 @@ def main():
 
 		
 
-
 		#Cheat section
 
 		mask_str = "".join(make_mask(word, wordas_list, mask, letter_chr))          #join returned list to form string
@@ -120,7 +132,6 @@ def main():
 			cheat_dict[mask_str].append(word)   
 		except KeyError:
 			cheat_dict[mask_str] = [word]
-
 
 
 
@@ -137,13 +148,6 @@ def main():
 			holder = i
 
 
-		print("Word = ", mask_filled)
-
-		#To show the count of how many words remain
-		if print_count == "Y":
-			number_of_words = test_max  
-			print("{} words remaining.".format(number_of_words)) 
-
 
 		#Reassign the wordlist to the new wordfamily
 		word_list = holder[0]
@@ -156,17 +160,22 @@ def main():
 			print("Word = ", mask_filled)
 
 
+		#To show the count of how many words remain
+		if print_count == "Y":
+			number_of_words = test_max  
+			print("{} words remaining.".format(number_of_words)) 
+
+
 		if "-" not in mask_filled: 
 			print("You have won the game")
 			win = True
 			break
 
 
-	if win == True:
+	if win_bool == True:
 		print("Congratulations you correctly guessed {} and still had {} guesses left over!".format(secret_word, guesses))
 	else:
 		print("Game Over")
-
 
 		#select a word at random from the family and choose as hangman word
 		print("The secret word is", cheat_dict[mask_filled][0])
@@ -174,6 +183,11 @@ def main():
 
 
 main()
+
+
+
+
+
 
 
 
