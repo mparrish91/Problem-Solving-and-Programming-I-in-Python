@@ -1,0 +1,128 @@
+#! /usr/bin/pythonw 
+#CS 101 #Program 8
+#Malcolm Parrish 
+#mp2gb@mail.umkc.edu)
+##
+##PROBLEM: #This program is for the Cow card game.  A simple card game for 4 players using a standard 52 card deck.  Players must follow suit.  After so many tricks, the player with the most wins.
+##
+##ALGORITHM:
+#Attached file
+
+import random
+
+class Player(object):
+	
+
+	def __init__(self, ID = " "):
+			
+		""" Accepts a string which will be used to uniquely identify your object
+			
+					
+		Arguments : 
+
+			ID : String used to uniquely identify your object.
+
+			
+		"""
+		
+		
+		self.ID = ID
+
+		
+		
+
+
+	def GetID(self) -> str:
+	 		
+		""" Returns: the ID that was passed to the initializer
+	   		 	
+		"""
+			
+		return self.ID
+
+		
+
+	def StartGame(self, Pos = " "):
+			 
+		""" Accepts a postion string that records where at the virtual table the player is seated
+	   
+	    	
+		"""
+		
+		
+		self.Pos = Pos
+
+	def GetPosition(self) -> str:
+			 
+		""" Returns: the positon that was set in StartGame.
+	       
+	    		
+		"""
+
+		
+		return Pos.ID
+
+		
+
+	def PlayCard(self, Hand : tuple, ThisTrick: tuple, PastTricks: tuple, PastHands: dict) -> int:
+			 
+		""" Returns an integer which the index into Hand of the card you wish to play.  The value must be >=0 and a valid value when used as an index into 	the tuple
+	         
+		Arguments : 
+			
+			Hand : tpl - Tuple of cards, the hand your Player has to choose a card from.
+					
+			ThisTrick : tpl - Tuple of 0-3 Cards, the cards that have been played so far this track in the order played.
+			
+			PastTricks : tpl - Tuple where each item is a tuple representing prior tricks of this hand. Each element has 6 elements: 4 cards of the 			trick, string specifying who led the trick, and a string specifying who won.  Strings in the format of N,S,E,W.
+							PastHands : dict - Dictionary with the keys as strings		(N,S,E,W) and values as integers.
+	         
+
+		Returns : Integer which is index into Hand
+	    
+		"""
+
+		Handrank = []
+
+		for element in Hand:
+			Handrank.append(element.NumericRank())
+
+		Hand_list = list(Hand)
+
+
+		Hand_dictionary = dict(zip(Hand_list, Handrank))
+		Hand_dictionary_list = sorted(Hand_dictionary, key=Hand_dictionary.get)         #Because dictionary cannot be sorted by value, create sorted list of keys by value
+
+		Handrank = Handrank.sort()                                      #Also sort the ranklist so the positions match between Hand and rank
+
+		
+		if len(ThisTrick) == 0:
+			
+			if "A" in Hand:                                         #Lead with Ace if have it
+				cardindex = Hand.index("A")
+				
+			else:
+				cardindex = Hand.index(Hand_dictionary_list[0])  #(Play lowest card) Find the card with lowest rank in Hand_dictionary_list, then 			find its index
+
+		else:
+			followsuit = ThisTrick[0].GetSuit()
+			followrank = ThisTrick[0].NumericRank()
+			
+			for card in Hand_list:
+				if card.GetSuit() == followsuit and card.NumericRank() > followrank:  #Strategy play the next greatest card of similar suit  
+					cardindex = Hand.index(card)
+					break
+				elif card.GetSuit() == followsuit:                                   #Strategy Play the lowest card of equal suit
+					cardindex = Hand.index(card)
+					break    
+				else:								      #Different suits, play lowest rank card of different suit
+					
+					cardindex = Hand.index(Hand_dictionary_list[0])
+
+		
+		return cardindex
+
+		
+
+
+	
